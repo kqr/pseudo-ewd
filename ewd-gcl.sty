@@ -1,0 +1,33 @@
+%%
+%% This is file `ewd-gcl.sty',
+%% manually created, eventually to be converted to a dtx file?
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ewd-gcl}%
+        [2018/02/06 v0.2
+     EWD style pseudocode%
+         ]%
+\newenvironment{gcl}{
+\newlength{\GCL@boxheight}
+\settoheight{\GCL@boxheight}{0.5\baselineskip}
+\renewcommand{\GCL@orbox}[0]{\framebox[3pt]{\rule{0pt}{\GCL@boxheight}}}
+\renewcommand{\GCL@cond}[2]{\;\;##2\+##1\;\;$\longrightarrow$\;\;\=\+}
+
+\renewcommand{\edo}[1]{\textbf{do}\GCL@cond{##1}{\=}}
+\renewcommand{\eif}[1]{\textbf{if}\GCL@cond{##1}{\=}}
+\renewcommand{\[}[0]{\\\-\<}
+\renewcommand{\]}[0]{\+\>}
+\renewcommand{\el}[1]{\\\-\<\-\<\;\GCL@orbox\GCL@cond{##1}{\>}}
+\renewcommand{\et}[0]{\\\;;\'}
+\renewcommand{\eod}[0]{\\\-\<\-\<\textbf{od}}
+\renewcommand{\efi}[0]{\\\-\<\-\<\textbf{fi}}
+\renewcommand{\ec}[1]{\`$\ast$ ##1}
+
+\begin{tabbing}
+\makebox[16pt]{}\=\+\makebox[16pt]{}\=\+
+}{
+\end{tabbing}
+}
+\endinput
+%%
+%% End of file `ewd-gcl.sty'.
