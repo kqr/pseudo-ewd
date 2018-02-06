@@ -1,0 +1,83 @@
+#+TITLE: Pseudocode in LaTeX: Dijkstra-style
+#+OPTIONS: toc:nil
+
+I liked the way Edsger Dijkstra wrote his pseudocode in one of the EWD papers:
+it was simple yet still incredibly clear for small problems.
+
+[[file:dijkstra-pseudocode.png]]
+
+I wanted to use this style myself and figured out it is called GCL: /Guarded
+Command Language/. Over the course of a few hours, I created some LaTeX macros
+to get it into my documents. For being very little work, the end result is
+surprisingly polished.
+
+[[file:screenshot.png]]
+
+
+* Installing
+
+Run =latex pseudo-ewd.ins= and it should spit out a file called
+=pseudo-ewd.sty=. Copy this to some directory scanned by your LaTeX system
+(perhaps =$HOME/texmf/tex/latex/local/=).
+
+
+* Using
+
+- Include the package in your LaTeX file with =\usepackage{pseudo-ewd}=.
+
+- Open up a block of pseudocode with =\begin{gcl}= and end it with
+  =\end{gcl}=.
+
+- Open an iteration group with =\edo{condition}=, and close it with
+  =\eod=.
+
+- Open a branching group with =\eif{condition}= and
+  close it with =\efi=.
+
+- If you want to sequence multiple statements, separate them with
+  =\et=.
+    - Mnemonic 1: it's the Latin word for "and".
+    - Mnemonic 2: it is an abbreviation for "Edsger Then".
+
+- If you want to add a condition to an iteration group or branching group, add
+  it with =\el {condition}=.
+    - Mnemonic 1: it's the first two letters in "else".
+    - Mnemonic 2: it's an abbreviation for "Edsger aLternative"
+
+- If you want to reduce the level of indentation, in some cases it makes sense
+  to turn a sequence of statements into a block. We do this by surrounding the
+  statements with =\[= and =\]=.
+
+- Comments or labels are created with =\ec{comment text}=.
+
+** Example
+
+#+BEGIN_SRC LaTeX
+\begin{gcl}
+
+    \textbf{stack} $e$                           \ec{Editing operations}
+\et $i \gets n$
+\et $j \gets m$
+
+\et \edo {$A_{i,j} > 0$} \[
+
+         $d \gets A_{i-1, j}$                              \ec{Deletion}
+     \et $s \gets A_{i-1, j-1}$                        \ec{Substitution}
+     \et $i \gets A_{i, j-1}$                             \ec{Insertion}
+     \et $n \gets \min(d, s, i)$
+
+     \et \eif {$n = d$} $e$.push("d", i)               \ec{Delete $V_i$}
+                    \et $i \gets i - 1$ 
+
+          \el {$n = s$} $e$.push("s", i, j)
+                                          \ec{$V_i \Leftrightarrow W_j$}
+                    \et $i \gets i - 1$
+                    \et $j \gets j - 1$ 
+
+          \el {$n = i$} $e$.push("i", j)               \ec{Insert $W_j$}
+                    \et $j \gets j - 1$ 
+         \efi
+
+\]  \eod
+\end{gcl}
+#+END_SRC

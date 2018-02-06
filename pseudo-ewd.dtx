@@ -1,0 +1,75 @@
+%% \iffalse meta-comment
+%%
+%% Copyright (C) 2018 by ~kqr
+%%
+%% Permission to use, copy, modify, and/or distribute this software for any
+%% purpose with or without fee is hereby granted, provided that the above
+%% copyright notice and this permission notice appear in all copies.
+%%
+%% THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+%% REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+%% AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+%% INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+%% LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+%% OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+%% PERFORMANCE OF THIS SOFTWARE.
+%%
+%% \fi
+
+% \iffalse
+%<package>\NeedsTexFormat{LaTeX2e}[2018/02/06]
+%<package>\ProvidesPackage{pseudo-ewd}
+%<package>     [2018/02/06 v0.1 EWD style pseudocode]
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{pseudo-ewd}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+\DocInput{pseudo-ewd.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \changes{v0.1}{2018/02/06}{Initial version}
+%
+% \GetFileInfo{pseudo-ewd.sty}
+%
+% \title{The \textsf{pseudo-ewd} package\thanks{This document corresponds to
+%   \textsf{pseudo-ewd}~\fileversion, dated \filedate.}}
+% \author{kqr \\ \texttt{k@rdw.se}}
+%
+% \maketitle
+%
+% \StopEventually{\PrintIndex}
+% \section{Implementation}
+% \begin{environment}{\gcl}
+% The environment for Dijkstra-style pseudocode.
+% \begin{macrocode}
+\newenvironment{gcl}{
+\newlength{\GCL@boxheight}
+\settoheight{\GCL@boxheight}{0.5\baselineskip}
+\renewcommand{\GCL@orbox}[0]{\framebox[3pt]{\rule{0pt}{\GCL@boxheight}}}
+\renewcommand{\GCL@cond}[2]{\;\;##2\+##1\;\;$\longrightarrow$\;\;\=\+}
+
+\renewcommand{\edo}[1]{\textbf{do}\GCL@cond{##1}{\=}}
+\renewcommand{\eif}[1]{\textbf{if}\GCL@cond{##1}{\=}}
+\renewcommand{\[}[0]{\\\-\<}
+\renewcommand{\]}[0]{\+\>}
+\renewcommand{\el}[1]{\\\-\<\-\<\;\GCL@orbox\GCL@cond{##1}{\>}}
+\renewcommand{\et}[0]{\\\;;\'}
+\renewcommand{\eod}[0]{\\\-\<\-\<\textbf{od}}
+\renewcommand{\efi}[0]{\\\-\<\-\<\textbf{fi}}
+\renewcommand{\ec}[1]{\`$\ast$ ##1}
+
+\begin{tabbing}
+\makebox[16pt]{}\=\+\makebox[16pt]{}\=\+
+}{
+\end{tabbing}
+}
+% \end{macrocode}
+% \end{environment}
+% \Finale
+\endinput
+
